@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.0.0.1
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant        none
 // @include      *://*puppet-kmo.gitbook.io/*
 // @include      *://*facebook.com/*
 // @run-at      document-end
+// @updateURL https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
+// @downloadURL https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js
 // @license MIT
 // ==/UserScript==
 

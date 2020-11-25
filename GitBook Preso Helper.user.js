@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.2
+// @version      0.1.0.0.3
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant        none
@@ -835,7 +835,12 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                                      if ( hitbut == null ) {
                                        links2use=me.dataset.link.replace(/https:\/\/[^\/]+\//g,"/")
                                        hitbut=document.querySelector('a[href *= "' + links2use + '"]')
-                                       hitbut.dataset.uuid = me.dataset.uuid  ;
+                                       
+                                       if ( hitbut == null ) {
+                                          location.href=links2use
+                                       }else {
+                                           hitbut.dataset.uuid = me.dataset.uuid  ;
+                                       }
                                      }
                                      hitbut.click();
 

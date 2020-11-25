@@ -8,7 +8,8 @@
 // @include      *://*puppet-kmo.gitbook.io/*
 // @include      *://*facebook.com/*
 // @run-at      document-end
-// @updateURL https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
+// @updateURL   https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js 
+// @updateURL22 https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
 // @downloadURL https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js
 // @license MIT
 

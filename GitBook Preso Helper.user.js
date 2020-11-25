@@ -11,7 +11,7 @@
 // @updateURL https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
 // @downloadURL https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js
 // @license MIT
-// ==/UserScript==
+
 
 (function() {
     const $ = (s, x = document) => x.querySelector(s)
@@ -1008,3 +1008,4 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
   }, 3000 ) ;
 
 })();
+// ==/UserScript==

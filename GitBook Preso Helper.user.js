@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.5
+// @version      0.1.0.0.6
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -707,6 +707,24 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         Object.assign(el, opts)
         return el
     }
+
+
+
+  const cp_Paste = (text2cp ) => {
+      /* Get the text field */
+      var copyText = document.getElementById("myInput");
+          copyText.value = text2cp
+
+      /* Select the text field */
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+
+      /* Alert the copied text */
+      alert("Copied the text: " + copyText.value.substr(0, 20));
+   }
     $('head').appendChild($el('style', { textContent: css }))
 
   var remote=null
@@ -720,7 +738,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
               if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
                   owin_obj=document.createElement("div");
                   owin_obj.classList="owin"
-                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>"
+                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input style='display:none' type='text' value='' id='myInput'>"
                   document.querySelector('body').appendChild(owin_obj)
               }
               owin_obj = document.querySelector('.owin ')
@@ -768,6 +786,9 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                     -1
                 )
                 $setCookie('maxscreen',parentpresoObj.dataset.maxscreen , 300) ;
+            }else if (event.code === 'KeyX' && event.srcElement.tagName != 'INPUT' ) {
+                let objIndex=document.querySelector("#__GITBOOK__ROOT__CLIENT__")
+                cp_Paste( objIndex.outerHTML )
             }else if (event.code === 'KeyV' && event.srcElement.tagName != 'INPUT' ) {
 
                 remote=window.open()

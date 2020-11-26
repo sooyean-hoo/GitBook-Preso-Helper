@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.11
+// @version      0.1.0.0.12
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -669,6 +669,9 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
     transition: all 2s;
     opacity:0;
 }
+.owin input{
+    width: 1000px;
+}
 
 
 .owin[ data-state="1"  ] {
@@ -715,7 +718,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
                   owin_obj=document.createElement("div");
                   owin_obj.classList="owin"
-                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input style='width:1000px' type='text' value='' id='myInput'>"
+                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
                   document.querySelector('body').appendChild(owin_obj)
               }
       /* Get the text field */
@@ -745,7 +748,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
               if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
                   owin_obj=document.createElement("div");
                   owin_obj.classList="owin"
-                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input style='display:none' type='text' value='' id='myInput'>"
+                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
                   document.querySelector('body').appendChild(owin_obj)
               }
               owin_obj = document.querySelector('.owin ')

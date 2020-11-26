@@ -944,6 +944,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 
 
                 remote.document.querySelectorAll('.my div.all,.my div.labs,.my div.lessons').forEach( myfilter => {
+                            myfilter.dataset.active='';
                             myfilter.addEventListener('click', function (event) {
                                     let me = event.srcElement
                                     me.parentElement.dataset.mode = me.innerText.replace(/show /i,"").toLowerCase() ;

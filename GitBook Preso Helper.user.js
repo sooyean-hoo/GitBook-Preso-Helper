@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.15
+// @version      0.1.0.0.16
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -781,7 +781,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
     if ( $("div[ class *= wholeContentBody ]") != null ) {
         let maxscr=$getCookie('maxscreen')
         if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
-        parentpresoObj.dataset.maxscreen = maxscr ;
+        $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
                    
         $("body").addEventListener('keydown', function (event) {
 

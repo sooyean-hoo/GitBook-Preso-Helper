@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.18
+// @version      0.1.0.0.19
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -736,7 +736,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 
       /* Select the text field */
       copyText.select();
-      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      copyText.setSelectionRange(0, 524288); /*For mobile devices*/
 
       /* Copy the text inside the text field */
       document.execCommand("copy");

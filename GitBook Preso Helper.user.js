@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.16
+// @version      0.1.0.0.17
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing) )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -676,14 +676,18 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 }
 
 
-.owin[ data-state="1"  ] {
+.owin[ data-state ^= "1"  ] {
     width: 100vw;
     height: 100vh;
     opacity:1;
     background:white;
 }
 
-
+.owin[ data-state ^= "10"  ] {
+    background-image: url("//i2.wp.com/codemyui.com/wp-content/uploads/2017/09/rotate-pulsating-loading-animation.gif?fit=880%2C440&ssl=1");
+    background-repeat: no-repeat ;
+    background-size: cover;
+}
 
 `
     const $getCookie=( cname) => {
@@ -782,7 +786,17 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         let maxscr=$getCookie('maxscreen')
         if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
         $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
-                   
+
+        let owin_obj = document.querySelector('.owin')
+        if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
+            owin_obj=document.createElement("div");
+            owin_obj.classList="owin"
+            owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
+            document.querySelector('body').appendChild(owin_obj)
+        }
+        owin_obj.dataset.state=100
+
+
         $("body").addEventListener('keydown', function (event) {
 
             const parentpresoObj=$("div[ class *= wholeContentBody ]")
@@ -1053,6 +1067,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
       if ( typeof jsData != "undefined") {
           eval(jsData);
       }
+      setTimeout("document.querySelector('.owin').dataset.state=0",1000 )
   }, 3000 ) ;
 
 })();

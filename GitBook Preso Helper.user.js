@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.21
+// @version      0.1.0.0.22
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
 // @connect     *
 // @include     *://*puppet-kmo.gitbook.io/*
 // @include     *://*facebook.com/*
+// @include     *://*.classroom.puppet.com/*
 // @run-at      document-end
 // @updateURL   https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
 // @downloadURL https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js
@@ -819,6 +820,11 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 $setCookie('maxscreen',parentpresoObj.dataset.maxscreen , 300) ;
             }else if (event.code === 'KeyX' && event.srcElement.tagName != 'INPUT' ) {
                 let objIndex=document.querySelector("#__GITBOOK__ROOT__CLIENT__")
+                
+                if ( document.querySelector("#checkpoints") != null ){
+                	objIndex=document.querySelector("#checkpoints") ;
+                }
+                
                 cp_Paste( objIndex.outerHTML )
             }else if (event.code === 'KeyV' && event.srcElement.tagName != 'INPUT' ) {
 

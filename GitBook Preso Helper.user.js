@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.22
+// @version      0.1.0.0.23
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -787,19 +787,22 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
     }
 
     if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ) {
-        let maxscr=$getCookie('maxscreen')
-        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
-        $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
+    	if (document.querySelector("#checkpoints") == null){
+    		
+	        let maxscr=$getCookie('maxscreen')
+	        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
+	        $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
+	
+	        let owin_obj = document.querySelector('.owin')
+	        if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
+	            owin_obj=document.createElement("div");
+	            owin_obj.classList="owin"
+	            owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
+	            document.querySelector('body').appendChild(owin_obj)
+	        }
+	        owin_obj.dataset.state=100
 
-        let owin_obj = document.querySelector('.owin')
-        if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
-            owin_obj=document.createElement("div");
-            owin_obj.classList="owin"
-            owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
-            document.querySelector('body').appendChild(owin_obj)
-        }
-        owin_obj.dataset.state=100
-
+    	}
 
         $("body").addEventListener('keydown', function (event) {
 

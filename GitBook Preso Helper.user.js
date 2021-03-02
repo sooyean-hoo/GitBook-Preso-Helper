@@ -786,7 +786,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         )
     }
 
-    if ( $("div[ class *= wholeContentBody ]") != null ) {
+    if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ) {
         let maxscr=$getCookie('maxscreen')
         if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
         $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;

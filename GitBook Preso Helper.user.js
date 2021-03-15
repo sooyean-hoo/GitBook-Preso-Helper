@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.24
+// @version      0.1.0.0.25
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -14,7 +14,7 @@
 // @downloadURL https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js
 // @license MIT
 // ==/UserScript==
-
+//// // @include     *://*evantage.gilmoreglobal.com/*
 
 // //////@    include     *://*/dayreview.html
 (function() {
@@ -675,6 +675,13 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 .owin input{
     width: 1000px;
 }
+.owin iframe{
+    width:100%;
+    height:100%;
+}
+.owin div{
+    display: none ;
+}
 
 
 .owin[ data-state ^= "1"  ] {
@@ -693,7 +700,24 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
     opacity: 0.75;
 }
 
+.owin[ data-state ^= "1000"  ] iframe {
+    width: 0vw;
+    height: 0vh;
+}
+.owin div{
+    display: unset ;
+}
 `
+//    const $checkowin=()=>{
+//        let owin_obj = document.querySelector('.owin')
+//        if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
+//            owin_obj=document.createElement("div");
+//            owin_obj.classList="owin"
+//            owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'   >"
+//            document.querySelector('body').appendChild(owin_obj)
+//        }
+//        owin_obj.dataset.state=100
+//    }	
     const $getCookie=( cname) => {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -728,7 +752,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
                   owin_obj=document.createElement("div");
                   owin_obj.classList="owin"
-                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
+                  owin_obj.innerHTML="<iframe src=''  ></iframe>      <input   type='text' value='' id='myInput'>"
                   document.querySelector('body').appendChild(owin_obj)
               }
       /* Get the text field */
@@ -758,7 +782,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
               if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
                   owin_obj=document.createElement("div");
                   owin_obj.classList="owin"
-                  owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
+                  owin_obj.innerHTML="<div></div><iframe src=''  style='width:100%;height:100%'></iframe><input   type='text' value='' id='myInput'>"
                   document.querySelector('body').appendChild(owin_obj)
               }
               owin_obj = document.querySelector('.owin ')
@@ -766,6 +790,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
               //owin_obj.innerHTML="<iframe src='"+url___+"'  style='width:100%;height:100%'></iframe>"
               //owin_obj.src=
               document.querySelector('.owin iframe').contentWindow.location= url___
+              document.querySelector('.owin div').innerHTML= url___
           }
 
     var nodetmp ;
@@ -793,15 +818,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 	        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
 	        $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
 	
-	        let owin_obj = document.querySelector('.owin')
-	        if ( typeof owin_obj == "undefined" ||   owin_obj == null  ){
-	            owin_obj=document.createElement("div");
-	            owin_obj.classList="owin"
-	            owin_obj.innerHTML="<iframe src=''  style='width:100%;height:100%'></iframe>      <input   type='text' value='' id='myInput'>"
-	            document.querySelector('body').appendChild(owin_obj)
-	        }
-	        owin_obj.dataset.state=100
-
+	        //$checkowin()
     	}
 
         $("body").addEventListener('keydown', function (event) {
@@ -829,7 +846,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 }
                 
                 cp_Paste( objIndex.outerHTML )
-            }else if (event.code === 'KeyV' && event.srcElement.tagName != 'INPUT' ) {
+            }else if (event.code === 'KeyV' && event.metaKey && event.shiftKey && event.srcElement.tagName != 'INPUT' ) {
 
                 remote=window.open()
                 remote.document.querySelector('head').innerHTML=remotehtmlheader
@@ -1050,20 +1067,26 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 document.querySelectorAll("div[ class *= navigationHeader ] svg , input[ placeholder *= Search ] ") [0].parentElement.click()
             }else if (event.code === 'ArrowRight') {
                 Window.owin_open('')
-                $("button[ class *= Next ],button[ class *= Next ],button[ class *= right ],a[ class *= right ],[ id *= next ],[ class *= Next ]").click();
+                $("button[ class *= next ],button[ class *= Next ],button[ class *= Next ],button[ class *= right ],a[ class *= right ],[ id *= next ],[ class *= Next ]").click();
             }else if (event.code === 'ArrowLeft') {
                 Window.owin_open('')
-                $("button[ class *= Prev ],button[ class *= prev ],button[ class *= left ],a[ class *= left ],[ id *= prev ],[ class *= Prev ]").click();
+                $("button[ class *= prev ],button[ class *= Prev ],button[ class *= prev ],button[ class *= left ],a[ class *= left ],[ id *= prev ],[ class *= Prev ]").click();
             }else if (event.code === 'KeyO' && event.srcElement.tagName != 'INPUT' ) {
                 nodetmp=[] ; document.querySelectorAll('span[ role = "presentation" ][ class *= "navButtonIconClickable" ]').forEach( x=> nodetmp.push(x)) ;
                 function a(){ nodetmp.pop().click() ; if ( nodetmp.length > 0 ) setTimeout(  a, 100) ; }
                 setTimeout( a, 100) ;
-            }else if (event.code === 'KeyC' && event.metaKey && event.srcElement.tagName != 'INPUT' ) {
+            }else if (event.code === 'KeyC' && event.metaKey && event.shiftKey && event.srcElement.tagName != 'INPUT' ) {
                 Window.owin_open('')
                 nodetmp=[] ; document.querySelectorAll('#__GITBOOK__ROOT__CLIENT__ a, a[ href *= "puppet" ][ class *= "navButtonClickable" ][ class *= "pageItemWithChildrenNested" ]').forEach( x=> nodetmp.push(x)) ;
                 function a(){  let bb=nodetmp.pop();  if( bb.href .indexOf( 'https://www.gitbook.com') == -1 && bb.querySelectorAll("svg[class *= 'Expand']").length == 0 ) bb.click() ;    if ( nodetmp.length > 0 ) setTimeout(  a, 2000) }
                 setTimeout( a, 100)
-            }
+            }else if (event.code === 'Slash' && event.metaKey  && event.srcElement.tagName != 'INPUT' ) {
+              Window.owin_open('<h1 style="font-size: 500%;line-height: 2ch;background: orange;">GitBook Preso Helper Activated!</h1>')
+          	  document.querySelector('.owin').dataset.state=1000
+          	  //document.querySelector('.owin iframe').contentWindow.location='data:text/html,%3Ch1%3EGitBook%20Preso%20Helper%20Activated!%3C%2Fh1%3E' ;
+          	  
+              setTimeout("document.querySelector('.owin').dataset.state=0",3000 )
+            }	
 
         });
     }
@@ -1079,7 +1102,8 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
       if ( typeof jsData != "undefined") {
           eval(jsData);
       }
-      setTimeout("document.querySelector('.owin').dataset.state=0",1000 )
+      setTimeout("Window.owin_open(''); document.querySelector('.owin').dataset.state=1000;",2000 )
+      setTimeout("document.querySelector('.owin').dataset.state=0",5000 )
   }, 3000 ) ;
 
 })();

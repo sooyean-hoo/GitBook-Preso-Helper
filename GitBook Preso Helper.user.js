@@ -15,6 +15,7 @@
 // @license MIT
 // ==/UserScript==
 //// // @include     *://*evantage.gilmoreglobal.com/*
+//// // @include     *://*jigsaw.gilmoreglobal.com/*
 
 // //////@    include     *://*/dayreview.html
 (function() {
@@ -821,7 +822,10 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 	        //$checkowin()
     	}
 
-        $("body").addEventListener('keydown', function (event) {
+    	
+    	let bbb=$("body")
+        if ( typeof bbb.length != "undefined") bbb=bbb[0];
+        bbb.addEventListener('keydown', function (event) {
 
             const parentpresoObj=$("div[ class *= wholeContentBody ]")
 
@@ -1106,4 +1110,18 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
       setTimeout("document.querySelector('.owin').dataset.state=0",5000 )
   }, 3000 ) ;
 
+//WIP download ebooks    
+//    setTimeout( x=>{
+//        let eee=    document.querySelector("img[src*='book']")
+//        if( eee != null && eee.src.endsWith('00') ) { console.log(eee.src) ;  }
+//         if( eee != null && eee.src.endsWith('00') && location.href.indexOf('jigsaw.gilmoreglobal.com') > -1 &&  location.href.indexOf('books') > -1   ) { window.open(eee.src + "#STOP") ;  }
+//        },0)
+    
+    
 })();
+
+
+
+
+
+//a=x=>{ document.querySelector('button[ class *= next ]').click()               ; setTimeout( a , 5000) ;  }  a()

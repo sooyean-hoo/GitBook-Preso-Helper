@@ -7,7 +7,6 @@
 // @grant       GM_xmlhttpRequest
 // @connect     *
 // @include     *://*puppet-kmo.gitbook.io/*
-// @include     *://*facebook.com/*
 // @include     *://*.classroom.puppet.com/*
 // @run-at      document-end
 // @updateURL   https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
@@ -18,6 +17,7 @@
 //// // @include     *://*jigsaw.gilmoreglobal.com/*
 
 // //////@    include     *://*/dayreview.html
+////// // @include     *://*facebook.com/*
 (function() {
     const $ = (s, x = document) => x.querySelector(s)
 
@@ -718,7 +718,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 //            document.querySelector('body').appendChild(owin_obj)
 //        }
 //        owin_obj.dataset.state=100
-//    }	
+//    }
     const $getCookie=( cname) => {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -814,15 +814,15 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 
     if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ) {
     	if (document.querySelector("#checkpoints") == null){
-    		
+
 	        let maxscr=$getCookie('maxscreen')
 	        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
 	        $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
-	
+
 	        //$checkowin()
     	}
 
-    	
+
     	let bbb=$("body")
         if ( typeof bbb.length != "undefined") bbb=bbb[0];
         bbb.addEventListener('keydown', function (event) {
@@ -844,11 +844,11 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 $setCookie('maxscreen',parentpresoObj.dataset.maxscreen , 300) ;
             }else if (event.code === 'KeyX' && event.srcElement.tagName != 'INPUT' ) {
                 let objIndex=document.querySelector("#__GITBOOK__ROOT__CLIENT__")
-                
+
                 if ( document.querySelector("#checkpoints") != null ){
                 	objIndex=document.querySelector("#checkpoints") ;
                 }
-                
+
                 cp_Paste( objIndex.outerHTML )
             }else if (event.code === 'KeyV' && event.metaKey && event.shiftKey && event.srcElement.tagName != 'INPUT' ) {
 
@@ -913,11 +913,11 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
 
                                      //let hitbut=document.querySelector("."+me.dataset.classtag)
                                      let hitbut=document.querySelector('a[data-uuid = "' + me.dataset.uuid + '"]')
-                                     
+
                                      if ( hitbut == null ) {
                                        links2use=me.dataset.link.replace(/https:\/\/[^\/]+\//g,"/")
                                        hitbut=document.querySelector('a[href *= "' + links2use + '"]')
-                                       
+
                                        if ( hitbut == null ) {
                                           location.href=links2use
                                        }else {
@@ -1088,9 +1088,9 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
               Window.owin_open('<h1 style="font-size: 500%;line-height: 2ch;background: orange;">GitBook Preso Helper Activated!</h1>')
           	  document.querySelector('.owin').dataset.state=1000
           	  //document.querySelector('.owin iframe').contentWindow.location='data:text/html,%3Ch1%3EGitBook%20Preso%20Helper%20Activated!%3C%2Fh1%3E' ;
-          	  
+
               setTimeout("document.querySelector('.owin').dataset.state=0",3000 )
-            }	
+            }
 
         });
     }
@@ -1110,14 +1110,14 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
       setTimeout("document.querySelector('.owin').dataset.state=0",5000 )
   }, 3000 ) ;
 
-//WIP download ebooks    
+//WIP download ebooks
 //    setTimeout( x=>{
 //        let eee=    document.querySelector("img[src*='book']")
 //        if( eee != null && eee.src.endsWith('00') ) { console.log(eee.src) ;  }
 //         if( eee != null && eee.src.endsWith('00') && location.href.indexOf('jigsaw.gilmoreglobal.com') > -1 &&  location.href.indexOf('books') > -1   ) { window.open(eee.src + "#STOP") ;  }
 //        },0)
-    
-    
+
+
 })();
 
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.26
+// @version      0.1.0.0.27
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -790,8 +790,10 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
               owin_obj.dataset.state= url___ == '' ? 0 : 1;
               //owin_obj.innerHTML="<iframe src='"+url___+"'  style='width:100%;height:100%'></iframe>"
               //owin_obj.src=
-              document.querySelector('.owin iframe').contentWindow.location= url___
-              document.querySelector('.owin div').innerHTML= url___
+              if ( owin_obj.dataset.state == 1   ){
+                  document.querySelector('.owin iframe').contentWindow.location= url___
+                  document.querySelector('.owin div').innerHTML= url___
+              }
           }
 
     var nodetmp ;

@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.27
-// @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Meta-C to Open all Outlines then X to copy )
+// @version      0.1.0.0.28
+// @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
 // @connect     *
@@ -1081,7 +1081,7 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 nodetmp=[] ; document.querySelectorAll('span[ role = "presentation" ][ class *= "navButtonIconClickable" ]').forEach( x=> nodetmp.push(x)) ;
                 function a(){ nodetmp.pop().click() ; if ( nodetmp.length > 0 ) setTimeout(  a, 100) ; }
                 setTimeout( a, 100) ;
-            }else if (event.code === 'KeyC' && event.metaKey && event.shiftKey && event.srcElement.tagName != 'INPUT' ) {
+            }else if (event.code === 'KeyC' && event.metaKey && event.ctrlKey && event.srcElement.tagName != 'INPUT' ) {
                 Window.owin_open('')
                 nodetmp=[] ; document.querySelectorAll('#__GITBOOK__ROOT__CLIENT__ a, a[ href *= "puppet" ][ class *= "navButtonClickable" ][ class *= "pageItemWithChildrenNested" ]').forEach( x=> nodetmp.push(x)) ;
                 function a(){  let bb=nodetmp.pop();  if( bb.href .indexOf( 'https://www.gitbook.com') == -1 && bb.querySelectorAll("svg[class *= 'Expand']").length == 0 ) bb.click() ;    if ( nodetmp.length > 0 ) setTimeout(  a, 2000) }

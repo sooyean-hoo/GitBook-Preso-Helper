@@ -814,12 +814,13 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         )
     }
 
-    if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ) {
+    if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ||	$("div[ class *= gitbook-root ]") != null
+       ) {
     	if (document.querySelector("#checkpoints") == null){
 
 	        let maxscr=$getCookie('maxscreen')
 	        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
-	        $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
+             if ( $("div[ class *= wholeContentBody ]") != null )  $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
 
 	        //$checkowin()
     	}
@@ -850,6 +851,10 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 if ( document.querySelector("#checkpoints") != null ){
                 	objIndex=document.querySelector("#checkpoints") ;
                 }
+                if ( objIndex == null ){
+                    objIndex=document.querySelector(".gitbook-root")
+                }
+
 
                 cp_Paste( objIndex.outerHTML )
             }else if (event.code === 'KeyV' && event.metaKey && event.shiftKey && event.srcElement.tagName != 'INPUT' ) {
@@ -1079,6 +1084,8 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
                 $("button[ class *= prev ],button[ class *= Prev ],button[ class *= prev ],button[ class *= left ],a[ class *= left ],[ id *= prev ],[ class *= Prev ]").click();
             }else if (event.code === 'KeyO' && event.srcElement.tagName != 'INPUT' ) {
                 nodetmp=[] ; document.querySelectorAll('span[ role = "presentation" ][ class *= "navButtonIconClickable" ]').forEach( x=> nodetmp.push(x)) ;
+                document.querySelectorAll("div[data-testid*='page.desktopTableOfContents'] div[data-rnw-int-class*=button___320_]").forEach( x=> nodetmp.push(x)) ;
+                //document.querySelectorAll("svg").forEach( x=> nodetmp.push(x)) ;
                 function a(){ nodetmp.pop().click() ; if ( nodetmp.length > 0 ) setTimeout(  a, 100) ; }
                 setTimeout( a, 100) ;
             }else if (event.code === 'KeyC' && event.metaKey && event.ctrlKey && event.srcElement.tagName != 'INPUT' ) {

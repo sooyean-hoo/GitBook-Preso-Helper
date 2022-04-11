@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.29
+// @version      0.1.0.0.30
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -639,13 +639,19 @@ div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageSide ]
    min-width: 1ch;
 }
 
+div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= contentNavigation ] {
     width: auto;
     padding: 0px;
 }
+div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents ~ div'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= pageContainer ] {
     max-width: 80vw;
 }
+
+div.gitbook-root[ data-maxscreen="3"  ] div[data-testid='page.desktopTableOfContents'],
+div.gitbook-root[ data-maxscreen="3"  ] div[data-testid='page.desktopTableOfContents ~ div'],
+div.gitbook-root[ data-maxscreen="3"  ] div[data-testid='page.outline'],
 
 div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= navigationHeader ],
 div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= sidebarMainWithHeader ],
@@ -842,9 +848,9 @@ $("div[ class *= gitbook-root ]") != null
 
 
             if (event.code === 'KeyB' && event.srcElement.tagName != 'INPUT' ) {
-                $("div[ class *= wholeContentBody ]").dataset.maxscreen = 3 ;
+                parentpresoObj.dataset.maxscreen = $("div[ class *= wholeContentBody ]").dataset.maxscreen = 3 ;
             }else if (event.code === 'KeyW' && event.srcElement.tagName != 'INPUT' ) {
-                $("div[ class *= wholeContentBody ]").dataset.maxscreen = 2 ;
+                parentpresoObj.dataset.maxscreen = $("div[ class *= wholeContentBody ]").dataset.maxscreen = 2 ;
             }else if (event.code === 'KeyP' && event.srcElement.tagName != 'INPUT' ) {
                 parentpresoObj.dataset.maxscreen *= -1 ;
                 parentpresoObj.dataset.maxscreen = Math.max(

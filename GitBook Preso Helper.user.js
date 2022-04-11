@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.28
+// @version      0.1.0.0.29
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -616,19 +616,24 @@ setTimeout("  toggleGitBook(document.querySelector(\"h3\"))  ", 3000)
 
 `
     const css = `
+div.gitbook-root div,
 div[ class *= wholeContentBody ] div {
     transition: all .5s ease-in-out;
 }
 
+div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.desktopTableOfContents'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= contentNavigation  ] {
+   max-width: 1ch;
    width: 1ch;
    min-width: 1ch;
    padding:0;
 }
+div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.desktopTableOfContents ~ div'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageContainer ] {
    padding: 0;
    max-width: 100vw;
 }
+div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.outline'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageSide ] {
    width: 1ch;
    min-width: 1ch;
@@ -814,13 +819,15 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         )
     }
 
-    if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ||	$("div[ class *= gitbook-root ]") != null
+    if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ||
+$("div[ class *= gitbook-root ]") != null
        ) {
     	if (document.querySelector("#checkpoints") == null){
 
 	        let maxscr=$getCookie('maxscreen')
 	        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
              if ( $("div[ class *= wholeContentBody ]") != null )  $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
+             if ( $("div.gitbook-root") != null )  $("div.gitbook-root").dataset.maxscreen = maxscr ;
 
 	        //$checkowin()
     	}
@@ -830,8 +837,8 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         if ( typeof bbb.length != "undefined") bbb=bbb[0];
         bbb.addEventListener('keydown', function (event) {
 
-            const parentpresoObj=$("div[ class *= wholeContentBody ]")
-
+            parentpresoObj=$("div[ class *= wholeContentBody ]")
+            if ( parentpresoObj == null ) parentpresoObj=$("div.gitbook-root")
 
 
             if (event.code === 'KeyB' && event.srcElement.tagName != 'INPUT' ) {

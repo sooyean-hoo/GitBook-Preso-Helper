@@ -1105,6 +1105,11 @@ $("div[ class *= gitbook-root ]") != null
                 nodetmp=[] ; document.querySelectorAll('span[ role = "presentation" ][ class *= "navButtonIconClickable" ]').forEach( x=> nodetmp.push(x)) ;
                 document.querySelectorAll("div[data-testid*='page.desktopTableOfContents'] div[data-rnw-int-class*=button___320_]").forEach( x=> nodetmp.push(x)) ;
                 //document.querySelectorAll("svg").forEach( x=> nodetmp.push(x)) ;
+                nodetmp2=[];   while(  nodetmp.length > 0 ){
+                  nodetmp2.push(   nodetmp.pop() )
+                  if ( nodetmp.length > 0 ) nodetmp2.push(   nodetmp.shift() )
+                }
+                nodetmp=nodetmp2
                 function a(){ nodetmp.pop().click() ; if ( nodetmp.length > 0 ) setTimeout(  a, 100) ; }
                 setTimeout( a, 100) ;
             }else if (event.code === 'KeyC' && event.metaKey && event.ctrlKey && event.srcElement.tagName != 'INPUT' ) {

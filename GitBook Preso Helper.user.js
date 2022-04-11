@@ -638,6 +638,10 @@ div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageSide ]
    width: 1ch;
    min-width: 1ch;
 }
+div.gitbook-root[ data-maxscreen="1"  ] div:first-child div:first-child div:first-child{
+   max-height: 0ch;
+}
+
 
 div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= contentNavigation ] {

@@ -848,9 +848,11 @@ $("div[ class *= gitbook-root ]") != null
 
 
             if (event.code === 'KeyB' && event.srcElement.tagName != 'INPUT' ) {
-                parentpresoObj.dataset.maxscreen = $("div[ class *= wholeContentBody ]").dataset.maxscreen = 3 ;
+                parentpresoObj.dataset.maxscreen = 3
+                $("div[ class *= wholeContentBody ]").dataset.maxscreen = 3 ;
             }else if (event.code === 'KeyW' && event.srcElement.tagName != 'INPUT' ) {
-                parentpresoObj.dataset.maxscreen = $("div[ class *= wholeContentBody ]").dataset.maxscreen = 2 ;
+                parentpresoObj.dataset.maxscreen = 2
+                $("div[ class *= wholeContentBody ]").dataset.maxscreen = 2 ;
             }else if (event.code === 'KeyP' && event.srcElement.tagName != 'INPUT' ) {
                 parentpresoObj.dataset.maxscreen *= -1 ;
                 parentpresoObj.dataset.maxscreen = Math.max(

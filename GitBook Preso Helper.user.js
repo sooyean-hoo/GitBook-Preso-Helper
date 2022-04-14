@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.31
-// @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
+// @version      0.1.0.0.32
+// @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= BlackBoard, W = WhiteBoard, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
 // @connect     *
@@ -642,26 +642,26 @@ div.gitbook-root[ data-maxscreen="1"  ] > div:first-child > div:first-child > di
    max-height: 0ch;
 }
 
+div.gitbook-root[ data-maxscreen="2"  ],
 
 div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= contentNavigation ] {
     width: auto;
     padding: 0px;
+    filter: brightness(100);
 }
 div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents ~ div'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= pageContainer ] {
     max-width: 80vw;
 }
 
-div.gitbook-root[ data-maxscreen="3"  ] div[data-testid='page.desktopTableOfContents'],
-div.gitbook-root[ data-maxscreen="3"  ] div[data-testid='page.desktopTableOfContents ~ div'],
-div.gitbook-root[ data-maxscreen="3"  ] div[data-testid='page.outline'],
+div.gitbook-root[ data-maxscreen="3"  ],
 
 div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= navigationHeader ],
 div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= sidebarMainWithHeader ],
 div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= contentNavigation ],
 div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= wholeContentPage ] {
-    background: grey ;
+    filter: brightness(0);
 }
 
 

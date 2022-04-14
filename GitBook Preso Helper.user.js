@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.30
+// @version      0.1.0.0.31
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= Black BG, W = Wide Mode, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -1097,10 +1097,20 @@ $("div[ class *= gitbook-root ]") != null
                 document.querySelectorAll("div[ class *= navigationHeader ] svg , input[ placeholder *= Search ] ") [0].parentElement.click()
             }else if (event.code === 'ArrowRight') {
                 Window.owin_open('')
-                $("button[ class *= next ],button[ class *= Next ],button[ class *= Next ],button[ class *= right ],a[ class *= right ],[ id *= next ],[ class *= Next ]").click();
+                nextbutton=$("button[ class *= next ],button[ class *= Next ],button[ class *= Next ],button[ class *= right ],a[ class *= right ],[ id *= next ],[ class *= Next ]")
+                if (nextbutton == null ){
+                	document.querySelectorAll("div.gitbook-root  div[data-testid='page.desktopTableOfContents'] ~ div  div[dir='auto']").forEach( x => {  if (x.innerHTML == "Next") x.click();  } )
+                }else {
+                	nextbutton.click();
+                }
             }else if (event.code === 'ArrowLeft') {
                 Window.owin_open('')
-                $("button[ class *= prev ],button[ class *= Prev ],button[ class *= prev ],button[ class *= left ],a[ class *= left ],[ id *= prev ],[ class *= Prev ]").click();
+                prevButton=$("button[ class *= prev ],button[ class *= Prev ],button[ class *= prev ],button[ class *= left ],a[ class *= left ],[ id *= prev ],[ class *= Prev ]");
+                if (prevButton == null ){
+                	document.querySelectorAll("div.gitbook-root  div[data-testid='page.desktopTableOfContents'] ~ div  div[dir='auto']").forEach( x => {  if (x.innerHTML == "Previous") x.click();  } )
+                }else {
+                	prevButton.click();
+                }
             }else if (event.code === 'KeyO' && event.srcElement.tagName != 'INPUT' ) {
                 nodetmp=[] ; document.querySelectorAll('span[ role = "presentation" ][ class *= "navButtonIconClickable" ]').forEach( x=> nodetmp.push(x)) ;
                 document.querySelectorAll("div[data-testid*='page.desktopTableOfContents'] div[data-rnw-int-class*=button___320_]").forEach( x=> nodetmp.push(x)) ;

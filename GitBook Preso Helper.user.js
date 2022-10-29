@@ -439,6 +439,17 @@ function owin_open(url___){
       owin.location = url___  ;
   }
 }
+var owins=new Array(1)
+owins[0]=owin
+function owins_open(url___, winindex=0){
+  //while( winindex >= owins.length  ) owins.push(null);
+  if ( typeof owins[winindex] == "undefined" ||  owins[winindex].opener == null  ){
+	  owins[winindex]=window.open( url___ );
+  }else{
+	  owins[winindex].location = url___  ;
+  }
+}
+
 
 //var last_pagenum = document.querySelector(".button").nextElementSibling.textContent.replace(/[^0-9]/g,"")
 var pagenum = document.querySelector(".button").nextElementSibling.textContent.replace(/[^0-9]/g,"")
@@ -713,6 +724,22 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
     opacity:1;
     background:white;
 }
+.owin[ data-state ^= "2"  ] {
+    width: 50vw;
+    height: 50vh;
+    opacity:1;
+    background:white;
+    left: 5vw;
+    margin: 10px;
+    border: solid 1ch lightblue;
+}
+.owin[ data-state ^= "2"  ] input,
+.owin[ data-state ^= "2"  ] iframe{
+    width: 0vw;
+    height: 0vh;
+    position: absolute;
+    left: -200vw;
+}
 
 .owin[ data-state ^= "10"  ] {
     background: radial-gradient(circle at 0% 0%, #000, #AAA 65%, transparent  ) ;
@@ -722,7 +749,6 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
     height: 5%;
     opacity: 0.75;
 }
-
 .owin[ data-state ^= "1000"  ] iframe {
     width: 0vw;
     height: 0vh;
@@ -1277,9 +1303,23 @@ $("div[ class *= gitbook-root ]") != null
 
 	let monkeyMenuList = [
 	  {
-	    title: 'hotkeys',
+	    title: 'HotKeys',
 	    fn: () => {
-	      alert("Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= BlackBoard, W = WhiteBoard, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )");
+	      Window.owin_open("<pre>"+
+	    		  "arrowkeys= &lt;PrevPage  NextPage &gt;\n"+
+	    		  "B = BlackBoard\n"+
+	    		  "W = WhiteBoard\n"+
+	    		  "P = Toggle for Preso Mode\n"+
+	    		  "S = Open Search\n"+
+	    		  "O = Open Index (Cacheing)... To Copy HTMLs for Lesson\n"+
+	    		  "Cntrl-Meta-C = Open all Outlines\n"+
+	    		  "X = Copy Html of the Topics\n\n\n"+
+	    		  "Cntrl-Meta-C to Open all Outlines then X to copy\n"+
+	    		  "</pre>");
+	      let owin_obj = document.querySelector('.owin') ;
+	      owin_obj.dataset.state=2 ;
+	      setTimeout("document.querySelector('.owin').dataset.state=0",30000 )
+	      //alert("Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= BlackBoard, W = WhiteBoard, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )");
 	    }
 	  }
 	];

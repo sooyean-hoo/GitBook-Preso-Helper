@@ -1314,8 +1314,9 @@ $("div[ class *= gitbook-root ]") != null
 	    		  "O = Open Index (Cacheing)... To Copy HTMLs for Lesson\n"+
 	    		  "Cntrl-Meta-C = Open all Outlines\n"+
 	    		  "X = Copy Html of the Topics\n\n\n"+
-	    		  "Cntrl-Meta-C to Open all Outlines then X to copy\n"+
-	    		  "</pre>");
+	    		  "Open all Outlines then X to copy for integration with GitBook Remote.\n"+
+	    		  "</pre>\n"+
+	    		  "<button onclick=document.querySelector('.owin').dataset.state=0 >close</button>");
 	      let owin_obj = document.querySelector('.owin') ;
 	      owin_obj.dataset.state=2 ;
 	      setTimeout("document.querySelector('.owin').dataset.state=0",30000 )

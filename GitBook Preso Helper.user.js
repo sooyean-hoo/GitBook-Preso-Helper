@@ -2,7 +2,7 @@
 // @name         GitBook Preso Helper
 // @name:en      GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.34
+// @version      0.1.0.0.35
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= BlackBoard, W = WhiteBoard, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
@@ -622,7 +622,11 @@ if ( typeof html != "undefined") {
 }
 document.body.dataset.show=1;
 
-
+jsData=localStorage.getItem('js');
+if ( typeof jsData != "undefined" ) {
+  localStorage.removeItem('js');
+  eval(jsData);
+}
 jsData=getUrlSearchMapValue('js')
 if ( typeof jsData != "undefined") {
   eval(jsData);
@@ -1178,6 +1182,11 @@ $("div[ class *= gitbook-root ]") != null
       }
       document.body.dataset.show=1;
 
+      let jsData=localStorage.getItem('js')
+	  if ( jsData != null ) {
+	    localStorage.removeItem('js');
+	    eval(jsData);
+	  }
 
       let jsData=getUrlSearchMapValue('js')
       if ( typeof jsData != "undefined") {

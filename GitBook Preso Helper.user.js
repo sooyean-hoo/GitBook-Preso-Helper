@@ -2,13 +2,14 @@
 // @name         GitBook Preso Helper
 // @name:en      GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.33
+// @version      0.1.0.0.34
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= BlackBoard, W = WhiteBoard, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
 // @connect     *
 // @include     *://*puppet-kmo.gitbook.io/*
 // @include     *://*.classroom.puppet.com/*
+// @include     https://survey.alchemer.com/s3/6880257/Puppet-Training-Survey-*
 // @run-at      document-end
 // @updateURL   https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
 // @downloadURL https://openuserjs.org/install/Sooyean-hoo/GitBook_Preso_Helper.user.js

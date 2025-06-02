@@ -669,8 +669,8 @@ body[data-maxscreen="1" ] header#site-header,
 
 div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.outline'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageSide ] {
-   width: 1ch;
-   min-width: 1ch;
+   width: 1px;
+   min-width: 1px;
 }
 #div.gitbook-root[ data-maxscreen="1"  ] > div:first-child > div:first-child > div:first-child{
 #   max-height: 0ch;
@@ -683,7 +683,15 @@ div.gitbook-root[ data-maxscreen="1"  ]  [data-testid]{
   maxWidth : 1px ;
 }
 
-
+body[data-maxscreen="1" ] aside#table-of-contents
+{
+      margin-left: -50px;
+}
+body[data-maxscreen="1" ] header#site-header
+{
+      margin-top: -50px;
+      opacity: 0 ;
+}
 
 
 body[data-maxscreen="2" ] header#site-header,
@@ -709,7 +717,7 @@ div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= pageContai
 
 
 
-body[data-maxscreen="2" ] header#site-header,
+body[data-maxscreen="3" ] header#site-header,
 body[data-maxscreen="3" ] aside#table-of-contents,
 body[data-maxscreen="3" ] main,
 
@@ -723,6 +731,26 @@ div[ class *= wholeContentBody ][ data-maxscreen="3"  ] div[ class *= wholeConte
 }
 
 
+
+
+body[data-maxscreen="2" ] header#site-header,
+body[data-maxscreen="2" ] aside#table-of-contents,
+body[data-maxscreen="2" ] main,
+body[data-maxscreen="3" ] header#site-header,
+body[data-maxscreen="3" ] aside#table-of-contents
+body[data-maxscreen="2" ] main {
+  max-width: 1px;
+  max-width: 1px;
+  opacity: 0 ;
+}
+
+body[data-maxscreen="2" ]{
+  BACKGROUND: RGB(255, 255, 255)
+}
+
+body[data-maxscreen="3" ]{
+  BACKGROUND: RGB(0, 0, 0)
+}
 
 
 

@@ -2,13 +2,14 @@
 // @name         GitBook Preso Helper
 // @name:en      GitBook Preso Helper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.36
+// @version      0.1.0.0.37
 // @description  Adapt GitBook for Use as Presention ( arrowkeys= <PrevPage  NextPage > , B= BlackBoard, W = WhiteBoard, P = Toggle for Preso Mode, S = Open Search, O = Open Index (Cacheing)... To Copy HTMLs for Lesson , Cntrl-Meta-C to Open all Outlines then X to copy )
 // @author       Hoo Sooyean 何書淵
 // @grant       GM_xmlhttpRequest
 // @connect     *
 // @include     *://*puppet-kmo.gitbook.io/*
 // @include     *://*.classroom.puppet.com/*
+// @include     *://open-2c.gitbook.com/*
 // @include     https://survey.alchemer.com/s3/6880257/Puppet-Training-Survey-*
 // @run-at      document-end
 // @updateURL   https://openuserjs.org/meta/Sooyean-hoo/GitBook_Preso_Helper.meta.js
@@ -636,10 +637,16 @@ setTimeout("  toggleGitBook(document.querySelector(\"h3\"))  ", 3000)
 
 `
     const css = `
+aside#table-of-contents,
+header#site-header,
+
 div.gitbook-root div,
 div[ class *= wholeContentBody ] div {
     transition: all .5s ease-in-out;
 }
+
+body[data-maxscreen="1" ] aside#table-of-contents,
+body[data-maxscreen="1" ] header#site-header,
 
 div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.desktopTableOfContents'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= contentNavigation  ] {
@@ -648,11 +655,18 @@ div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= contentNav
    min-width: 1ch;
    padding:0;
 }
+
+body[data-maxscreen="1" ] main,
+
 div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.desktopTableOfContents ~ div'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageContainer ] {
    padding: 0;
    max-width: 100vw;
 }
+
+body[data-maxscreen="1" ] aside#table-of-contents,
+body[data-maxscreen="1" ] header#site-header,
+
 div.gitbook-root[ data-maxscreen="1"  ] div[data-testid='page.outline'],
 div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageSide ] {
    width: 1ch;
@@ -661,22 +675,43 @@ div[ class *= wholeContentBody ][ data-maxscreen="1"  ] div[ class *= pageSide ]
 #div.gitbook-root[ data-maxscreen="1"  ] > div:first-child > div:first-child > div:first-child{
 #   max-height: 0ch;
 #}
+
+body[data-maxscreen="1" ] aside#table-of-contents,
+body[data-maxscreen="1" ] header#site-header,
+
 div.gitbook-root[ data-maxscreen="1"  ]  [data-testid]{
   maxWidth : 1px ;
 }
 
-div.gitbook-root[ data-maxscreen="2"  ],
 
+
+
+body[data-maxscreen="2" ] header#site-header,
+body[data-maxscreen="2" ] aside#table-of-contents,
+body[data-maxscreen="2" ] main,
+
+div.gitbook-root[ data-maxscreen="2"  ],
 div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= contentNavigation ] {
     width: auto;
     padding: 0px;
     filter: brightness(100);
 }
+
+body[data-maxscreen="2" ] header#site-header,
+body[data-maxscreen="2" ] aside#table-of-contents,
+body[data-maxscreen="2" ] main,
+
 div.gitbook-root[ data-maxscreen="2"  ] div[data-testid='page.desktopTableOfContents ~ div'],
 div[ class *= wholeContentBody ][ data-maxscreen="2"  ] div[ class *= pageContainer ] {
     max-width: 80vw;
 }
+
+
+
+body[data-maxscreen="2" ] header#site-header,
+body[data-maxscreen="3" ] aside#table-of-contents,
+body[data-maxscreen="3" ] main,
 
 div.gitbook-root[ data-maxscreen="3"  ],
 
@@ -867,16 +902,16 @@ body[ data-maxscreen="1"  ] div[role="complementary"]{
         )
     }
 
-    if ( $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ||
+    if (  $("aside") != null ||   $("div[ class *= wholeContentBody ]") != null || document.querySelector("#checkpoints") != null ||
 $("div[ class *= gitbook-root ]") != null
        ) {
-    	if (document.querySelector("#checkpoints") == null){
+    	if (   $("aside") != null ||  document.querySelector("#checkpoints") == null){
 
 	        let maxscr=$getCookie('maxscreen')
 	        if ( maxscr == "" ) { maxscr=-1 ; $setCookie('maxscreen',maxscr, 300) ; }
              if ( $("div[ class *= wholeContentBody ]") != null )  $("div[ class *= wholeContentBody ]").dataset.maxscreen = maxscr ;
              if ( $("div.gitbook-root") != null )  $("div.gitbook-root").dataset.maxscreen = maxscr ;
-
+             if ( $("aside") != null )  $("body").dataset.maxscreen = maxscr ;
 	        //$checkowin()
     	}
 
@@ -887,15 +922,17 @@ $("div[ class *= gitbook-root ]") != null
 
             parentpresoObj=$("div[ class *= wholeContentBody ]")
             if ( parentpresoObj == null ) parentpresoObj=$("div.gitbook-root")
+            if ( parentpresoObj == null ) parentpresoObj=$("body")
 
 
             if (event.code === 'KeyB' && event.srcElement.tagName != 'INPUT' ) {
                 parentpresoObj.dataset.maxscreen = 3
-                $("div[ class *= wholeContentBody ]").dataset.maxscreen = 3 ;
             }else if (event.code === 'KeyW' && event.srcElement.tagName != 'INPUT' ) {
                 parentpresoObj.dataset.maxscreen = 2
-                $("div[ class *= wholeContentBody ]").dataset.maxscreen = 2 ;
             }else if (event.code === 'KeyP' && event.srcElement.tagName != 'INPUT' ) {
+                if(  isNaN( parentpresoObj.dataset.maxscreen ) ){
+                  parentpresoObj.dataset.maxscreen = -1 ;
+                }                
                 parentpresoObj.dataset.maxscreen *= -1 ;
                 parentpresoObj.dataset.maxscreen = Math.max(
                     parentpresoObj.dataset.maxscreen,
@@ -911,7 +948,9 @@ $("div[ class *= gitbook-root ]") != null
                 if ( objIndex == null ){
                     objIndex=document.querySelector(".gitbook-root")
                 }
-
+                if ( objIndex == null ){
+                    objIndex=document.querySelector("aside#table-of-contents")
+                }
 
                 cp_Paste( objIndex.outerHTML )
             }else if (event.code === 'KeyV' && event.metaKey && event.shiftKey && event.srcElement.tagName != 'INPUT' ) {
@@ -1182,15 +1221,16 @@ $("div[ class *= gitbook-root ]") != null
       }
       document.body.dataset.show=1;
 
-      let jsData=localStorage.getItem('js')
-	  if ( jsData != null ) {
-	    localStorage.removeItem('js');
-	    eval(jsData);
-	  }
+      jsData=localStorage.getItem('js')
 
-      let jsData=getUrlSearchMapValue('js')
+  	  if ( jsData != null ) {
+  	    localStorage.removeItem('js');
+  	    eval(jsData);
+  	  }
+
+      jsData=getUrlSearchMapValue('js')
       if ( typeof jsData != "undefined") {
-          eval(jsData);
+           eval(jsData);
       }
       setTimeout("Window.owin_open(''); document.querySelector('.owin').dataset.state=1000;",2000 )
       setTimeout("document.querySelector('.owin').dataset.state=0",5000 )
